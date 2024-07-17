@@ -5,4 +5,6 @@ from . import models
 admin.site.register(models.Booking)
 admin.site.register(models.Ticket)
 admin.site.register(models.QRCode)
+admin.site.register(models.Payment)
+
 
