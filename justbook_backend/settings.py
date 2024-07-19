@@ -212,8 +212,10 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-	'https://www.justbook.seamelss.online/',
-	'https://justbook.seamelss.online/',
+    'https://www.justbook.seamelss.online',
+    'https://www.justbook.backend.seamelss.online',
+    'https://justbook.backend.seamelss.online',
+    'https://justbook.seamelss.online',
     'http://localhost:3000'
 ]
 
