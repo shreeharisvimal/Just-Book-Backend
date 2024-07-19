@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated , IsAdminUser
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.permissions import AllowAny
 
 
 class GenreListCreateAPIView(ListCreateAPIView):
@@ -31,7 +32,7 @@ class LanguageRetrieveDestroyAPIView(RetrieveUpdateDestroyAPIView):
 class MovieListCreateAPIView(ListCreateAPIView):
     queryset = models.Movie.objects.all()
     serializer_class =  serializers.MovieSerializer
-
+    permission_classes =[AllowAny]
 
 class movieListFetchAPIView(APIView):
     def get(self, request, id):

@@ -81,9 +81,9 @@ INSTALLED_APPS = [
 
 
 MIDDLEWARE = [
-	 'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+	 'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware', 
 
@@ -205,6 +205,11 @@ CORS_ALLOW_METHODS =(
 # 	'https://justbook.seamelss.online/',
 #     "http://localhost:3000",
 # ]
+CORS_ALLOWED_ORIGINS = [
+    'https://www.justbook.seamelss.online',
+    'https://justbook.seamelss.online',
+    'http://localhost:3000',
+]
 
 CSRF_TRUSTED_ORIGINS = [
 	'https://www.justbook.seamelss.online/',
@@ -218,7 +223,7 @@ CSRF_TRUSTED_ORIGINS = [
 REST_FRAMEWORK = {
      'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-      ],
+    ],
       
 }
 
