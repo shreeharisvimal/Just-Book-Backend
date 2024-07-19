@@ -33,7 +33,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://www.justbook.seamelss.online', 'https://justbook.seamelss.online', 'http://localhost:3000', '127.0.0.1']
+ALLOWED_HOSTS = ['https://www.justbook.seamelss.online', 'https://justbook.seamelss.online', 'http://localhost', '127.0.0.1']
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
