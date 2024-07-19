@@ -191,8 +191,7 @@ class UserProfilePage(GenericAPIView):
             data = serializers.UserProfileSerializer(user).data
             try:
                 profile = user.Profile
-
-                profile_pic_url = settings.PRODUCTION_URL if settings.PRODUCTION_URL else request.build_absolute_uri('/')[:-1] + profile.profile_pic.url 
+                profile_pic_url = settings.PRODUCTION_URL + profile.profile_pic.url if settings.PRODUCTION_URL else request.build_absolute_uri('/')[:-1] + profile.profile_pic.url 
                 data['profile_pic'] = profile_pic_url
             except models.UserProfile.DoesNotExist:
                 data['profile_pic'] = None  
