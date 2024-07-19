@@ -34,7 +34,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['justbook.seamelss.online', 'www.justbook.seamelss.online']
+ALLOWED_HOSTS = ['*',]
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -187,11 +187,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORGIN_ALLOW_ALL = True
 
-CORS_ALLOWED_ORIGINS = [
-	'https://www.justbook.seamelss.online/',
-	'https://justbook.seamelss.online/',
-    "http://localhost:3000",
-]
+# CORS_ALLOWED_ORIGINS = [
+# 	'https://www.justbook.seamelss.online/',
+# 	'https://justbook.seamelss.online/',
+#     "http://localhost:3000",
+# ]
 
 CSRF_TRUSTED_ORIGINS = [
 	'https://www.justbook.seamelss.online/',
