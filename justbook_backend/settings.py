@@ -89,7 +89,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
+
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware', 
@@ -199,12 +199,6 @@ CORS_ALLOW_METHODS =(
 	'PUT',
 )
 
-
-# CORS_ALLOWED_ORIGINS = [
-# 	'https://www.justbook.seamelss.online/',
-# 	'https://justbook.seamelss.online/',
-#     "http://localhost:3000",
-# ]
 
 CSRF_TRUSTED_ORIGINS = [
 	'https://www.justbook.seamelss.online/',
