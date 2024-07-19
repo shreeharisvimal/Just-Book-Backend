@@ -94,7 +94,6 @@ class FetchUserTickets(APIView):
                 print('ticket')
                 ticket = models.Ticket.objects.get(id=id)
                 data = ticket.get_ticket_data()
-                # serializer = serializers.TicketSerializer(ticket)
                 return Response(data, status=status.HTTP_200_OK)
             except Exception as e:
                 return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -113,7 +112,7 @@ class FetchUserTickets(APIView):
             data = serializers.TicketSerializer(ticket, many=True).data
             for ticket in data:
                 if 'qr_code' in ticket and 'qr_code_image' in ticket['qr_code']:
-                    ticket['qr_code']['qr_code_image'] = request.build_absolute_uri('/')[:-1] + ticket['qr_code']['qr_code_image']
+                    ticket['qr_code']['qr_code_image'] = settings.PRODUCTION_URL+ ticket['qr_code']['qr_code_image'] if settings.PRODUCTION_URL else  request.build_absolute_uri('/')[:-1] + ticket['qr_code']['qr_code_image']
             return Response(data=data, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
