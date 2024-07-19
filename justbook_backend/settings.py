@@ -33,8 +33,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['https://www.justbook.seamelss.online', 'https://justbook.seamelss.online', 'http://localhost:3000']
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -83,7 +82,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-	 'corsheaders.middleware.CorsMiddleware',
+	'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware', 
 
@@ -200,11 +199,6 @@ CORS_ALLOW_METHODS =(
 )
 
 
-# CORS_ALLOWED_ORIGINS = [
-# 	'https://www.justbook.seamelss.online/',
-# 	'https://justbook.seamelss.online/',
-#     "http://localhost:3000",
-# ]
 CORS_ALLOWED_ORIGINS = [
     'https://www.justbook.seamelss.online',
     'https://justbook.seamelss.online',
@@ -212,10 +206,8 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://www.justbook.seamelss.online',
     'https://www.justbook.backend.seamelss.online',
     'https://justbook.backend.seamelss.online',
-    'https://justbook.seamelss.online',
     'http://localhost:3000'
 ]
 
