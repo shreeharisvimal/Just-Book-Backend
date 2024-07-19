@@ -54,6 +54,8 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
+PRODUCTION_URL = os.environ.get('PRODUCTION_URL', 'http://localhost:8000')
+
 
 
 # Application definition
