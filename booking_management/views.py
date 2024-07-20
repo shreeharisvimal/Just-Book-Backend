@@ -73,7 +73,6 @@ class BookingHandler(APIView):
                 show_details=show,
             )
             ticket = booking.Create_Unique_QR()
-            print(ticket)
             payment.payment_status = 'SUCCESS'
             booking.booking_status = 'COMPLETED'
             payment.save()
@@ -91,7 +90,6 @@ class FetchUserTickets(APIView):
         user = request.user
         if id:
             try:
-                print('ticket')
                 ticket = models.Ticket.objects.get(id=id)
                 data = ticket.get_ticket_data()
                 return Response(data, status=status.HTTP_200_OK)
@@ -108,7 +106,6 @@ class FetchUserTickets(APIView):
                     data = serializers.TicketSerializer(ticket, many=True).data
                     return Response(data, status=status.HTTP_226_IM_USED)
                 ticket = models.Ticket.objects.filter(qr_code=qrcode.id)
-                print("THe tickets", ticket)
             data = serializers.TicketSerializer(ticket, many=True).data
             for ticket in data:
                 if 'qr_code' in ticket and 'qr_code_image' in ticket['qr_code']:
