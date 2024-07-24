@@ -80,7 +80,8 @@ INSTALLED_APPS = [
     'show_management',
     'booking_management',
 
-    # celery
+    # celery and channels
+    'channels',
     'django_celery_results',
     'django_celery_beat'
 ]
@@ -123,7 +124,18 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'justbook_backend.wsgi.application'
+# WSGI_APPLICATION = 'justbook_backend.wsgi.application'
+ASGI_APPLICATION = 'justbook_backend.asgi.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
+
 
 
 # Database
