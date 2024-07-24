@@ -36,6 +36,8 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'www.justbook.seamelss.online', 
     'justbook.seamelss.online', 
+    'www.justbook.backend.seamelss.online',
+    'justbook.backend.seamelss.online',
     'localhost', 
     '127.0.0.1',
     '16.171.177.92'
