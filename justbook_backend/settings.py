@@ -33,15 +33,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    'www.justbook.seamelss.online', 
-    'justbook.seamelss.online', 
-    'www.justbook.backend.seamelss.online',
-    'justbook.backend.seamelss.online',
-    'localhost', 
-    '127.0.0.1',
-    '16.171.177.92'
-]
+ALLOWED_HOSTS = ['*',]
 
 
 
@@ -91,9 +83,9 @@ INSTALLED_APPS = [
 
 
 MIDDLEWARE = [
+	'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-	'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware', 
 
@@ -221,17 +213,9 @@ CORS_ALLOW_METHODS =(
 )
 
 
-CORS_ALLOWED_ORIGINS = [
-    'https://www.justbook.seamelss.online',
-    'https://justbook.seamelss.online',
-    'http://localhost:3000',
-]
+CORS_ALLOWED_ORIGINS = ['*',]
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://www.justbook.backend.seamelss.online',
-    'https://justbook.backend.seamelss.online',
-    'http://localhost:3000'
-]
+CSRF_TRUSTED_ORIGINS = ["*",]
 
 
 
