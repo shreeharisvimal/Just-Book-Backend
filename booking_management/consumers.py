@@ -51,6 +51,6 @@ class SeatConsumer(AsyncWebsocketConsumer):
         try:
             show = Show.objects.get(id=self.show_id)
             show.seatAllocation = seat_data
-            show.save()
+            return show.save()
         except Show.DoesNotExist:
             pass
