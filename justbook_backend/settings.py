@@ -63,6 +63,7 @@ PRODUCTION_URL =  os.getenv('PRODUCTION_URL') if os.getenv('PRODUCTION_URL') els
 # Application definition
 
 INSTALLED_APPS = [
+	'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -84,7 +85,6 @@ INSTALLED_APPS = [
     'booking_management',
 
     # celery and channels
-    'channels',
     'django_celery_results',
     'django_celery_beat'
 ]
