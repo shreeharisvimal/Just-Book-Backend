@@ -16,6 +16,7 @@ import os
 import sys
 from django.utils import timezone
 import django
+django.setup()
 
 from dotenv import load_dotenv
 
