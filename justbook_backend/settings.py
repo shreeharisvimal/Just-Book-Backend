@@ -14,9 +14,8 @@ from datetime import timedelta
 from pathlib import Path
 import os
 import sys
-from django.utils import timezone
 import django
-django.setup()
+# django.setup()
 
 from dotenv import load_dotenv
 
@@ -64,6 +63,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+
     # cors and rest
     'corsheaders',
     'rest_framework',
@@ -93,8 +93,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
-    'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware', 
     
 ]

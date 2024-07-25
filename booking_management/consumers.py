@@ -1,7 +1,7 @@
 import json
 from show_management.models import Show
 from channels.generic.websocket import AsyncWebsocketConsumer
-from asgiref.sync import sync_to_async
+from channels.db import database_sync_to_async
 
 class SeatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
@@ -46,7 +46,7 @@ class SeatConsumer(AsyncWebsocketConsumer):
             'seat_data': seat_data
         }))
 
-    @sync_to_async
+    @database_sync_to_async
     def save_seat_data(self, seat_data):
         try:
             show = Show.objects.get(id=self.show_id)
