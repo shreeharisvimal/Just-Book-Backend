@@ -200,7 +200,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
-CORS_ORGIN_ALLOW_ALL = True
 
 
 CORS_ALLOW_METHODS =(
@@ -212,18 +211,18 @@ CORS_ALLOW_METHODS =(
 	'PUT',
 )
 
+CORS_ORGIN_ALLOW_ALL = True
 
 CORS_ALLOWED_ORIGINS = [
-	"https://justbook.seamelss.online",
-	"https://www.justbook.seamelss.online",
-	'http://localhost:8000'
-
+    "http://localhost:3000",
+    "https://justbook.seamelss.online",
+    "https://www.justbook.seamelss.online",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://justbook.seamelss.online",
 	"https://www.justbook.seamelss.online",
-	'http://localhost:8000'
+	'http://localhost:3000'
 	
 ]
 
