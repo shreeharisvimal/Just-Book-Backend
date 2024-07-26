@@ -72,6 +72,7 @@ class LoginSerializer(serializers.ModelSerializer):
             'user_cred': user.email if user.email else user.phone,
             'isAdmin': user.is_superuser,
             'first_name': user.first_name,
+            'user_id':user.pk,
             'access_token': token['AccessToken'],
             'refresh_token': token['RefreshToken'],
         }
