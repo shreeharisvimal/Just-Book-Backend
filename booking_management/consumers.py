@@ -6,7 +6,6 @@ from django.apps import apps
 class SeatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.show_id = self.scope['url_route']['kwargs']['show_id']
-        print('This is the show id ', self.show_id)
         self.room_group_name = f'show_{self.show_id}'
         await self.channel_layer.group_add(
             self.room_group_name,
