@@ -1,7 +1,5 @@
 from django.db import models
-from theater_management import models as Theatermodels
-from movie_management import models as moviemodels
-
+from django.apps import apps
 
 class CustomeQueryset(models.QuerySet):
     def active(self):
@@ -11,11 +9,10 @@ class CustomManager(models.Manager):
     def get_queryset(self):
         return CustomeQueryset(self.model, using=self._db).active()
     
-
 class Show(models.Model):
-    movie = models.ForeignKey(moviemodels.Movie, on_delete=models.CASCADE)
-    theater = models.ForeignKey(Theatermodels.Theater, on_delete=models.CASCADE, blank=True, null=True)
-    screen = models.ForeignKey(Theatermodels.Screen, on_delete=models.CASCADE, blank=True, null=True)
+    movie = models.ForeignKey('movie_management.Movie', on_delete=models.CASCADE)
+    theater = models.ForeignKey('theater_management.Theater', on_delete=models.CASCADE, blank=True, null=True)
+    screen = models.ForeignKey('theater_management.Screen', on_delete=models.CASCADE, blank=True, null=True)
     seatAllocation = models.JSONField(default=dict)
     show_date = models.DateField()
     show_time = models.TimeField()
@@ -26,5 +23,3 @@ class Show(models.Model):
 
     def __str__(self):
         return f"{self.movie} -{self.theater} - {self.screen} - {self.show_date} - {self.show_time} "
-
-
