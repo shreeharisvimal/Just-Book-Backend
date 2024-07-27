@@ -91,7 +91,6 @@ class Userauths(APIView):
 
 class LogoutView(APIView):
     permission_classes = [IsAuthenticated]
-    
     def post(self, request):
         try:
             refresh_token = request.data['refresh_token']
@@ -105,7 +104,6 @@ class LogoutView(APIView):
 class OtpgetView(APIView):
 
     def get(self, request, auth):
-        # print(auth)
         val = randint(111111, 999999)
         data = {}
 
