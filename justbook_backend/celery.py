@@ -1,8 +1,8 @@
 from __future__ import absolute_import, unicode_literals
+from datetime import timedelta
 from celery.schedules import crontab
 import os
 from celery import Celery
-import show_management
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'justbook_backend.settings')
 
@@ -18,6 +18,10 @@ app.conf.update(timezone='Asia/Kolkata',
                         'task': 'show_management.tasks.Check_Shows',
                         'schedule': crontab(hour=0, minute=0),
                     },
+                    'seatsShowSeatsUpdate':{
+                        'task': 'show_management.tasks.ShowSeatsUpdate',
+                        'schedule': timedelta(minutes=5),
+                    }
                 },
 	)
 
