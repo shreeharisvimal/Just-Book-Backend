@@ -2,3 +2,5 @@
 package-lock.json
 package.json
 PyWhatKit_DB.txt
+
+__pycache__/

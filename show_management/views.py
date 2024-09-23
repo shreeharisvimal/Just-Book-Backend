@@ -36,7 +36,7 @@ class showCreateApi(APIView):
 
         shows = []
         for theater in theaters:
-            theater_shows = models.Show.objects.filter(theater=theater.id)
+            theater_shows = models.Show.objects.filter(theater=theater.id, is_over=False)
             shows.extend(theater_shows)
 
         serializer = serializers.showFetchSerializer(shows, many=True)
@@ -59,7 +59,7 @@ class showCreateApi(APIView):
 class ShowFetchWIthMovie(GenericAPIView):
     def get(self, request, id):
         try:
-            shows = models.Show.objects.filter(movie__in = [id])
+            shows = models.Show.objects.filter(movie__in = [id], is_over=False)
             serializer = serializers.showFetchSerializer(shows, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as E:
