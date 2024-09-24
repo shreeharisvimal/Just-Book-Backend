@@ -116,7 +116,6 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'justbook_backend.wsgi.application'
 ASGI_APPLICATION = 'justbook_backend.asgi.application'
 
 CHANNEL_LAYERS = {
@@ -212,13 +211,13 @@ CORS_ORGIN_ALLOW_ALL = True
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-    "https://justbook.seamelss.online",
-    "https://www.justbook.seamelss.online",
+    "https://justbook.shreeharisvimal.tech",
+    "https://www.justbook.shreeharisvimal.tech",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://justbook.seamelss.online",
-	"https://www.justbook.seamelss.online",
+    "https://justbook.shreeharisvimal.tech",
+	"https://www.justbook.shreeharisvimal.tech",
 	'http://localhost:3000'
 	
 ]
