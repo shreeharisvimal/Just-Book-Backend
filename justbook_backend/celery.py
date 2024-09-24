@@ -7,7 +7,7 @@ from celery import Celery
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'justbook_backend.settings')
 
 app = Celery('justbook_backend')
-app.config_from_object('django.conf:settings', namespwace='CELERY')
+app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
 
 app.conf.enable_utc = False
