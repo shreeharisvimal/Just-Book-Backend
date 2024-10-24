@@ -15,7 +15,7 @@ class QRCode(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.qr_code_image:
-            qr_data = f"{settings.CORS_ALLOWED_ORIGINS[0]}/verify/{self.qr_code_id}/"
+            qr_data = f"{settings.PRODUCTION_URL}/verify/{self.qr_code_id}/"
             self.qr_code_image = Get_Qr_Code(qr_data)
         super().save(*args, **kwargs)
 
