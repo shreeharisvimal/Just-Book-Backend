@@ -148,17 +148,20 @@ class StaffAuth(GenericAPIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
+        email = request.data.get('email')
+        if models.User.objects.filter(email=email).exists():
+            return Response({'message': 'Staff details are already in use'}, status=status.HTTP_409_CONFLICT)
+        
         serializer = serializers.StaffSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)        
+            user_data = serializer.save()
+            return Response(user_data, status=status.HTTP_201_CREATED)        
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def get(self, request):
         staff = models.User.objects.filter(Q(is_staff=True) & Q(is_superuser=False))
         serializer = serializers.StaffSerializer(staff, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-        
 
 class StaffDelete(RetrieveDestroyAPIView):
     permission_classes = [IsAuthenticated]

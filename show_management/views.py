@@ -43,8 +43,6 @@ class showCreateApi(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def delete(self, request, id):
-        # if not request.user.is_authenticated:
-        #     return Response(status=status.HTTP_401_UNAUTHORIZED)
         try:
             show = models.Show.objects.get(id=id)
             show.delete()

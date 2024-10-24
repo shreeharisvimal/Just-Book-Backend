@@ -1,9 +1,11 @@
 from celery import shared_task
 from .models import Show
-from django.utils import timezone
 from django.db.models import Q
+from django.utils import timezone
+from django.db import transaction
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
+from django.core.exceptions import ObjectDoesNotExist
 
 
 def UpdateWebsocket(id, seatAllocation):
@@ -27,31 +29,4 @@ def Check_Shows(self):
         show.is_over = True
         show.save()
     return "Done"
-
-
-@shared_task(bind=True)
-def ShowSeatsUpdate(self):
-    shows = Show.objects.all()
-    for show in shows:
-        seat_allocation = show.seatAllocation
-        updated_seat_allocation = {}
-
-        for key, row in seat_allocation.items():
-            updated_seat_allocation[key] = {
-                'type': row['type'],
-                'seats': {
-                    seat_num: {
-                        'name': seat['name'],
-                        'user': '',
-                        'status': 'available',
-                        'holdedseat': False,
-                        'is_freeSpace': seat['is_freeSpace']
-                    } for seat_num, seat in row['seats'].items()
-                },
-                'is_row_freeSpace': row['is_row_freeSpace']
-            }
-
-        UpdateWebsocket(show.id, updated_seat_allocation)
-    
-    return 'Done'
 

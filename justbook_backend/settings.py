@@ -31,7 +31,7 @@ load_dotenv()
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -43,8 +43,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 PRODUCTION_URL =  os.getenv('PRODUCTION_URL') if os.getenv('PRODUCTION_URL') else 'http://localhost:8000'
 
+
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(PRODUCTION_URL if PRODUCTION_URL else BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Define STATIC_URL and STATIC_ROOT
 STATIC_URL = '/static/'
@@ -212,9 +213,9 @@ CORS_ALLOW_METHODS =(
 CORS_ORGIN_ALLOW_ALL = True
 
 CORS_ALLOWED_ORIGINS = [
+    "https://www.justbook.shreeharisvimal.tech",
     "http://localhost:3000",
     "https://justbook.shreeharisvimal.tech",
-    "https://www.justbook.shreeharisvimal.tech",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -234,6 +235,44 @@ REST_FRAMEWORK = {
       
 }
 
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME":timedelta(minutes=90),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "UPDATE_LAST_LOGIN": False,
+
+    "ALGORITHM": "HS256",
+    "VERIFYING_KEY": "",
+    "AUDIENCE": None,
+    "ISSUER": None,
+    "JSON_ENCODER": None,
+    "JWK_URL": None,
+    "LEEWAY": 0,
+
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
+    "USER_ID_FIELD": "id",
+    "USER_ID_CLAIM": "user_id",
+    "USER_AUTHENTICATION_RULE": "rest_framework_simplejwt.authentication.default_user_authentication_rule",
+
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+    "TOKEN_TYPE_CLAIM": "token_type",
+    "TOKEN_USER_CLASS": "rest_framework_simplejwt.models.TokenUser",
+
+    "JTI_CLAIM": "jti",
+
+    "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
+    "SLIDING_TOKEN_LIFETIME": timedelta(minutes=120),
+    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=2),
+
+    "TOKEN_OBTAIN_SERIALIZER": "admin_control.serializer.MyTokenObtainPairSerializer",
+    "TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSerializer",
+    "TOKEN_VERIFY_SERIALIZER": "rest_framework_simplejwt.serializers.TokenVerifySerializer",
+    "TOKEN_BLACKLIST_SERIALIZER": "rest_framework_simplejwt.serializers.TokenBlacklistSerializer",
+    "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
+    "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
+}
 
 
 EMAIL_BACKEND=os.getenv('EMAIL_BACKEND')
@@ -250,3 +289,6 @@ RAZORPAY_API_SECRET=os.getenv('RAZORPAY_API_SECRET')
 
 # 2factor
 TWO_FACTOR_AUTH_API_KEY =os.getenv('TWO_FACTOR_AUTH_API_KEY')
+
+
+FRONT_END_PRODUCTION_URL =  CORS_ALLOWED_ORIGINS[0] if PRODUCTION_URL else CORS_ALLOWED_ORIGINS[1]

@@ -52,18 +52,30 @@ class PaymentHandler(APIView):
             'payment': serializers.PaymentSerializer(payment).data
         }, status=status.HTTP_200_OK)
     
-class BookingHandler(APIView):
 
+class BookingHandler(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        print(request.headers)
         data = request.data
         user = request.user
         if user.is_anonymous:
             return Response({"error": "User is not authenticated"}, status=status.HTTP_401_UNAUTHORIZED)
-        payment = models.Payment.objects.get(user=user, payment_id=str(data.get('pay_id')))
-        show = Show.objects.get(id=int(data.get('show_details')))
+
+        try:
+            payment = models.Payment.objects.get(user=user, payment_id=str(data.get('pay_id')))
+        except models.Payment.DoesNotExist:
+            return Response({"error": "Payment not found"}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({"error": "Error retrieving payment"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        try:
+            show = Show.objects.get(id=int(data.get('show_details')))
+        except Show.DoesNotExist:
+            return Response({"error": "Show not found"}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({"error": "Error retrieving show"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
         try:
             booking = models.Booking.objects.create(
                 user=user,
@@ -77,10 +89,11 @@ class BookingHandler(APIView):
             booking.booking_status = 'COMPLETED'
             payment.save()
             booking.save()
-            
-            return Response({"ticket":ticket.id}, status=status.HTTP_201_CREATED)
+
+            return Response({"ticket": ticket.id}, status=status.HTTP_201_CREATED)
+
         except Exception as e:
-            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({"error": "An error occurred while processing the booking"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
 
 class FetchUserTickets(APIView):

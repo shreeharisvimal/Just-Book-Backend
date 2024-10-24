@@ -18,10 +18,7 @@ app.conf.update(timezone='Asia/Kolkata',
                         'task': 'show_management.tasks.Check_Shows',
                         'schedule': crontab(hour=0, minute=0),
                     },
-                    'seatsShowSeatsUpdate':{
-                        'task': 'show_management.tasks.ShowSeatsUpdate',
-                        'schedule': timedelta(minutes=5),
-                    }
+                   
                 },
 	)
 
