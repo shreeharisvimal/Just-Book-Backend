@@ -53,7 +53,7 @@ class Screen(models.Model):
 
 
 class Seat_type(models.Model):
-    theater = models.ForeignKey(Theater, on_delete=models.CASCADE, related_name='theater')
+    theater = models.ForeignKey(Theater, on_delete=models.SET_NULL, related_name='theater')
     name = models.CharField(max_length=255)
     price_multi = models.CharField(max_length=20)
 
@@ -61,7 +61,7 @@ class Seat_type(models.Model):
         return f'{self.name} - {self.name} - {self.price_multi}'
 
 class Seats(models.Model):
-    screen = models.ForeignKey(Screen, on_delete=models.CASCADE, related_name='seats')
+    screen = models.ForeignKey(Screen, on_delete=models.SET_NULL, related_name='seats')
     seat_allocation = models.JSONField(default=dict)
 
     def __str__(self) -> str:
