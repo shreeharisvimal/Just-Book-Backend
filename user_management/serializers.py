@@ -85,12 +85,6 @@ class OtpSerializer(serializers.ModelSerializer):
         model = models.User
         fields = ['email', 'otp']
 
-    def send_otp_to_email(self, validated_data):
-        subject = 'Your OTP Code'
-        message = f"Your OTP code is {validated_data['otp']}. Use this code to complete your authentication."
-        from_email = 'yourseamlesslife@gmail.com'
-        recipient_list = [validated_data['email']]
-        send_mail(subject, message, from_email, recipient_list)
 
 class PhoneOtpSerializer(serializers.ModelSerializer):
     otp = serializers.CharField(max_length=6, required=True)
@@ -99,11 +93,6 @@ class PhoneOtpSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
         fields = ['phone', 'otp']
-
-    def send_otp_to_phone(self, validated_data):
-        url = f"https://2factor.in/API/V1/99ae538f-7e0b-11ee-8cbb-0200cd936042/SMS/{validated_data['phone']}/{validated_data['otp']}/Just Book Sender"
-        response = requests.get(url)
-        return Response({'otp': validated_data['otp'], 'message': 'OTP sent successfully', 'status': 200})
 
 
 class AdminLoginSerializer(serializers.ModelSerializer):

@@ -24,6 +24,7 @@ class CustomManager(models.Manager):
             raise ValueError("Show not found or is not active.")
         except Exception as e:
             raise e
+        
 class Show(models.Model):
     movie = models.ForeignKey('movie_management.Movie', on_delete=models.CASCADE)
     theater = models.ForeignKey('theater_management.Theater', on_delete=models.CASCADE, blank=True, null=True)

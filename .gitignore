@@ -3,6 +3,6 @@ package-lock.json
 package.json
 PyWhatKit_DB.txt
 
-__pycache__/
+/__pycache__/*
 staticfiles
 media/*

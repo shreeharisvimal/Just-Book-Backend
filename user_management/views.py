@@ -117,7 +117,9 @@ class OtpgetView(APIView):
             if serializer.is_valid():
                 email = serializer.data['email']
                 otp = serializer.data['otp']
+                print('the email', type(email), 'the otp', type(otp))
                 result = send_otp_to_email.delay(email, otp)
+                print('the result in the send otp to email', result)
                 return Response({'otp': val, 'message': 'OTP sent successfully'}, status=status.HTTP_200_OK)
             return Response({'message': 'Invalid data'}, status=status.HTTP_400_BAD_REQUEST)
             

@@ -10,13 +10,15 @@ from django.conf import settings
 
 @shared_task(bind=True)
 def send_otp_to_email(self, email, otp):
+    print('hi in the mail send ing part celery')
     subject = 'Your OTP Code for JustBook'
     html_message = render_to_string('OTP_email.html', {'otp': otp})
     plain_message = strip_tags(html_message)
     from_email = settings.EMAIL_HOST_USER
     
     try:
-        send_mail(subject, plain_message, from_email, [email], html_message=html_message)
+        val = send_mail(subject, plain_message, from_email, [email], html_message=html_message)
+        print('the mail sending', val)
         return 'Done'
     except Exception as e:
         return str(e)
