@@ -19,6 +19,9 @@ class Theater(models.Model):
     theater_status = models.CharField(max_length=10, choices=THEATER_STATUS, default='PENDING')
     no_of_screens = models.IntegerField(null=True, blank=True, default=0)
 
+    class Meta:
+        ordering = ['-id']
+
     def __str__(self):
         return self.theater_name
     
@@ -27,7 +30,8 @@ class Theater(models.Model):
 class ScreenType(models.Model):
     name = models.CharField(max_length=255)
     price_multi = models.CharField(max_length=50)
-
+    class Meta:
+        ordering = ['-id']
 
 
 class Screen(models.Model):
@@ -35,6 +39,10 @@ class Screen(models.Model):
     total_seats = models.IntegerField()
     theater = models.ForeignKey(Theater, on_delete=models.CASCADE, related_name='screens')
     screen_type = models.ForeignKey(ScreenType, on_delete=models.CASCADE, related_name='screens')
+
+
+    class Meta:
+        ordering = ['-id']
 
     def __str__(self):
         return f'{self.name} - {self.screen_type.name}'
@@ -56,7 +64,9 @@ class Seat_type(models.Model):
     theater = models.ForeignKey(Theater, on_delete=models.CASCADE, related_name='theater')
     name = models.CharField(max_length=255)
     price_multi = models.CharField(max_length=20)
-
+    class Meta:
+        ordering = ['-id']
+    
     def __str__(self) -> str:
         return f'{self.name} - {self.name} - {self.price_multi}'
 
@@ -64,6 +74,9 @@ class Seats(models.Model):
     screen = models.ForeignKey(Screen, on_delete=models.CASCADE, related_name='seats')
     seat_allocation = models.JSONField(default=dict)
 
+    class Meta:
+        ordering = ['-id']
+    
     def __str__(self) -> str:
         return f'{self.seat_allocation} - screen {self.screen} - {self.screen.theater.theater_name}'
     

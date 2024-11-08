@@ -37,5 +37,8 @@ class Show(models.Model):
 
     objects = CustomManager()
 
+    class Meta:
+        ordering = ['-id']
+
     def __str__(self):
         return f"{self.movie} -{self.theater} - {self.screen} - {self.show_date} - {self.show_time} "

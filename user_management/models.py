@@ -56,7 +56,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_login = models.DateTimeField(auto_now_add=True)
 
     objects = Manager()
-
+    class Meta:
+        ordering = ['-id']
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'phone']
 

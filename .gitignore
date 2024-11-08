@@ -4,5 +4,6 @@ package.json
 PyWhatKit_DB.txt
 
 /__pycache__/*
+
 staticfiles
 media/*

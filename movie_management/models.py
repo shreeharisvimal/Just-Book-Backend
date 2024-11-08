@@ -23,6 +23,9 @@ class Movie(models.Model):
     release_date = models.CharField(max_length=255, default='00/00/0000')
     language = models.CharField(max_length=255, default=' ')
 
+    class Meta:
+        ordering = ['-id']
+
     def __str__(self):
         return self.title
 
