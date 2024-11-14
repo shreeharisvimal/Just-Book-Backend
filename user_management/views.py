@@ -86,6 +86,29 @@ class Userauths(APIView):
         user = models.User.objects.all()
         serializer = serializers.UserGetSerializer(user, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class PasswordManagement(APIView):
+    permission_classes =[IsAuthenticated]
+    
+    def put(self, request):
+        current_password = request.data.get("current_password")
+        new_password = request.data.get("new_password")
+        confirm_password = request.data.get("confirm_password")
+
+        if not all([current_password, new_password, confirm_password]):
+            return Response({"error": "All fields are required."}, status=status.HTTP_400_BAD_REQUEST)
+
+        user = models.User.objects.get(id=request.user.id)
+        if not user.check_password(current_password):
+            return Response({"error": "Current password is incorrect."}, status=status.HTTP_400_BAD_REQUEST)
+
+        if new_password != confirm_password:
+            return Response({"error": "New passwords do not match."}, status=status.HTTP_400_BAD_REQUEST)
+
+        user.set_password(new_password)
+        user.save()
+        return Response({"message": "Password changed successfully!"}, status=status.HTTP_200_OK)
     
 
 
