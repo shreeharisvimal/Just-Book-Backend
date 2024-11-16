@@ -28,7 +28,8 @@ class TheaterPutClassApi(GenericAPIView):
     def put(self, request, id):
         try:
             theater = models.Theater.objects.get(id=id)
-            theater.theater_status = 'APPROVED'
+            theater_status = request.data.get('status')
+            theater.theater_status = theater_status
             theater.save()
             return Response(status=status.HTTP_200_OK)
         except models.Theater.DoesNotExist:
