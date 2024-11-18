@@ -6,9 +6,17 @@ from . import serializers
 from rest_framework import viewsets, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated , IsAdminUser
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import AllowAny
+
+
+
+class ItemPagination(PageNumberPagination):
+    page_size = 4
+    page_size_query_param = 'page_size'
+    max_page_size = 100
 
 
 class GenreListCreateAPIView(ListCreateAPIView):
@@ -32,6 +40,7 @@ class LanguageRetrieveDestroyAPIView(RetrieveUpdateDestroyAPIView):
 class MovieListCreateAPIView(ListCreateAPIView):
     queryset = models.Movie.objects.all()
     serializer_class =  serializers.MovieSerializer
+    pagination_class = ItemPagination
     permission_classes =[AllowAny]
 
 class movieListFetchAPIView(APIView):

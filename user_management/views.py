@@ -23,9 +23,15 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken 
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework_simplejwt.views import TokenRefreshView
+from rest_framework.pagination import PageNumberPagination
 from rest_framework_simplejwt.serializers import TokenRefreshSerializer
 
 
+
+class ItemPagination(PageNumberPagination):
+    page_size = 4
+    page_size_query_param = 'page_size'
+    max_page_size = 100
 
 
 
@@ -185,8 +191,10 @@ class StaffAuth(GenericAPIView):
     
     def get(self, request):
         staff = models.User.objects.filter(Q(is_staff=True) & Q(is_superuser=False))
-        serializer = serializers.StaffSerializer(staff, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        paginator = ItemPagination()
+        paginated_staff = paginator.paginate_queryset(staff, request, view=self)
+        serializer = serializers.StaffSerializer(paginated_staff, many=True)
+        return paginator.get_paginated_response(serializer.data)
 
 class StaffDelete(RetrieveDestroyAPIView):
     permission_classes = [IsAuthenticated]

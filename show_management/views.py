@@ -4,12 +4,17 @@ from . import serializers
 from theater_management.models import Theater, Screen
 
 from rest_framework.views import APIView
-from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated , IsAdminUser
 from rest_framework import permissions, status
+from rest_framework.exceptions import ValidationError
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticated , IsAdminUser
 from rest_framework.generics import GenericAPIView,ListCreateAPIView, RetrieveUpdateDestroyAPIView, GenericAPIView
 
+class ItemPagination(PageNumberPagination):
+    page_size = 4
+    page_size_query_param = 'page_size'
+    max_page_size = 100
 
 
 
@@ -39,8 +44,10 @@ class showCreateApi(APIView):
             theater_shows = models.Show.objects.filter(theater=theater.id, is_over=False)
             shows.extend(theater_shows)
 
-        serializer = serializers.showFetchSerializer(shows, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        paginator = ItemPagination()
+        paginated_data = paginator.paginate_queryset(shows, request, view=self)
+        serializer = serializers.showFetchSerializer(paginated_data, many=True)
+        return paginator.get_paginated_response(serializer.data)
 
     def delete(self, request, id):
         try:

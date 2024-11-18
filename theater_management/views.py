@@ -1,28 +1,37 @@
-from django.forms import ValidationError
 from . import models
-from django.http import HttpResponse
 from . import models
 from . import serializers
-
 from rest_framework import viewsets
+from django.http import HttpResponse
+from django.forms import ValidationError
 from rest_framework.views import APIView
-from rest_framework.generics import GenericAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
-from rest_framework.exceptions import NotFound
 from rest_framework import permissions, status
+from rest_framework.exceptions import NotFound
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.pagination import PageNumberPagination  
+from rest_framework.generics import GenericAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
 
+class ItemPagination(PageNumberPagination):
+    page_size = 4
+    page_size_query_param = 'page_size'
+    max_page_size = 100
 
 class TheaterApiListCreateAPIView(ListCreateAPIView):
-    queryset = models.Theater.objects.all() 
+    queryset = models.Theater.objects.all()
     serializer_class = serializers.TheaterSerializer
+    pagination_class = ItemPagination
 
     def create(self, request, *args, **kwargs):
         if models.Theater.objects.filter(address=request.data.get('address')).exists():
-            return Response(status=status.HTTP_226_IM_USED)
-        
+            return Response(
+                {"detail": "A theater with this address already exists."},
+                status=status.HTTP_226_IM_USED
+            )
         return super().create(request, *args, **kwargs)
+    
+    
 
 class TheaterPutClassApi(GenericAPIView):
     def put(self, request, id):
@@ -36,10 +45,13 @@ class TheaterPutClassApi(GenericAPIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 class FetchTheaterStaff(GenericAPIView):
+    permission_classes =[IsAuthenticated]
     def get(self, request, email):
-        theater = models.Theater.objects.filter(email = email)
-        serializer = serializers.TheaterSerializer(theater, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        theaters = models.Theater.objects.filter(email=email)
+        paginator = ItemPagination() 
+        paginated_theaters = paginator.paginate_queryset(theaters, request) 
+        serializer = serializers.TheaterSerializer(paginated_theaters, many=True)
+        return paginator.get_paginated_response(serializer.data)
 
 
 class TheaterApiRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
@@ -52,6 +64,7 @@ class TheaterApiRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 class ScreenTypePostGet(ListCreateAPIView):
     queryset = models.ScreenType.objects.all()
     serializer_class = serializers.ScreenTypeSerializer
+    pagination_class = ItemPagination
 
 class ScreenTypeDeletePut(RetrieveUpdateDestroyAPIView):
     queryset = models.ScreenType.objects.all()
@@ -82,8 +95,10 @@ class ScreenGet(APIView):
                 return Response({"error": "Theater not found"}, status=status.HTTP_404_NOT_FOUND)
 
             screens = models.Screen.objects.filter(theater__in=theaters).prefetch_related('seats')
-            serializer = serializers.ScreenGetSerializer(screens, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            paginator = ItemPagination()
+            paginated_data = paginator.paginate_queryset(screens, request, view=self)
+            serializer = serializers.ScreenGetSerializer(paginated_data, many=True)
+            return paginator.get_paginated_response(serializer.data)
 
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -120,8 +135,10 @@ class SeatTypeFetchAPI(GenericAPIView):
     def get(self, request):
         try:
             seat_types = models.Seat_type.objects.filter()
-            serializer = serializers.SeatTypeGetSerializer(seat_types, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            paginator = ItemPagination()
+            paginated_staff = paginator.paginate_queryset(seat_types, request, view=self)
+            serializer = serializers.SeatTypeGetSerializer(paginated_staff, many=True)
+            return paginator.get_paginated_response(serializer.data)
         except models.Theater.DoesNotExist as e:
             print(e)
 
