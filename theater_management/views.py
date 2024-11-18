@@ -142,6 +142,19 @@ class SeatTypeFetchAPI(GenericAPIView):
         except models.Theater.DoesNotExist as e:
             print(e)
 
+class SeatTypeForSeatingFetchAPI(APIView):
+
+    def get(self, request):
+        try:
+            seat_types = models.Seat_type.objects.all()
+            serializer = serializers.SeatTypeGetSerializer(seat_types, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response(
+                {"error": "Failed to fetch seat types. Please try again later."},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
 class SeatTypeDeleteApi(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
     queryset = models.Seat_type.objects.all()

@@ -20,6 +20,7 @@ urlpatterns = [
 
     path("SeatTypeCreateApi/", views.SeatTypeCreateAPI.as_view(), name='SeatTypeCreateApi'),
     path('SeatTypeFetch/', views.SeatTypeFetchAPI.as_view(), name='SeatTypeFetch'),
+    path('SeatTypeFetch/ForSeating/', views.SeatTypeForSeatingFetchAPI.as_view(), name='SeatTypeFetch'),
     path("SeatTypeDeleteApi/<int:id>/", views.SeatTypeDeleteApi.as_view(), name='SeatTypeDeleteApi'),
 
     path('SeatAllocationCreateApi/', views.SeatAllocationCreateApi.as_view(), name='SeatAllocationCreateApi'),
