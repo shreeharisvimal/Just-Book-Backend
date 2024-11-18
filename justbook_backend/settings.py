@@ -41,15 +41,15 @@ ALLOWED_HOSTS = ['*']
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-PRODUCTION_URL =  os.getenv('PRODUCTION_URL') if os.getenv('PRODUCTION_URL') else 'http://localhost:8000'
+PRODUCTION_URL =  os.getenv('PRODUCTION_URL') if os.getenv('PRODUCTION_URL') else 'http://127.0.0.1:8000'
 
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(PRODUCTION_URL, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Define STATIC_URL and STATIC_ROOT
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(PRODUCTION_URL, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 

@@ -93,7 +93,7 @@ class BookingHandler(APIView):
             return Response({"ticket": ticket.id}, status=status.HTTP_201_CREATED)
 
         except Exception as e:
-            return Response({"error": "An error occurred while processing the booking"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({"error": f"An error occurred while processing the booking, {e}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
 
 class FetchUserTickets(APIView):
